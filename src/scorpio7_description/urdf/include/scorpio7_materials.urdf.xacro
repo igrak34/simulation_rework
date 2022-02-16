@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<robot>
+    <material name="scorpio7_wheels">
+        <color rgba="${29/255} ${45/255} ${16/255} 1"/>
+    </material>
+    <material name="scorpio7_black">
+        <color rgba="0 0 0 1"/> 
+    </material>
+    <material name="scorpio7_blue">
+        <color rgba="${71/255} ${128/255} ${133/255} 1"/> 
+    </material>
+    <material name="scorpio7_orange">
+        <color rgba="${194/255} ${83/255} ${0/255} 1"/> 
+    </material>
+</robot>

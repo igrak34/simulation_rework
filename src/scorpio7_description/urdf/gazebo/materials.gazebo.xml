@@ -1,0 +1,23 @@
+<robot>
+    <gazebo reference="rocker_r_link">
+        <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="rocker_l_link">
+        <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="wheel_fl_link">
+        <material>Gazebo/Red</material>
+    </gazebo>
+    <gazebo reference="wheel_fr_link">
+        <material>Gazebo/Red</material>
+    </gazebo>
+    <gazebo reference="wheel_rr_link">
+        <material>Gazebo/Red</material>
+    </gazebo>
+    <gazebo reference="wheel_rl_link">
+        <material>Gazebo/Red</material>
+    </gazebo>
+    <gazebo reference="base_link">
+        <material>Gazebo/Orange</material>
+    </gazebo>
+</robot>

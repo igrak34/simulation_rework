@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="scorpio7">
+
+  <xacro:include filename="$(find scorpio7_description)/urdf/gazebo/scorpio7.gazebo.xml" />
+  <xacro:include filename="$(find scorpio7_description)/urdf/gazebo/zed.gazebo.xml" />
+  <xacro:include filename="$(find scorpio7_description)/urdf/gazebo/frontcam.gazebo.xml" />
+  <xacro:include filename="$(find scorpio7_description)/urdf/gazebo/imu.gazebo.xml" />
+  <xacro:include filename="$(find scorpio7_description)/urdf/gazebo/materials.gazebo.xml" />
+  <xacro:include filename="$(find scorpio7_description)/urdf/zed_urdf/zed_descr.urdf.xacro" />
+
+  <!-- Import cutom colors for Scorpio7 -->
+  <xacro:include filename="$(find scorpio7_description)/urdf/include/scorpio7_materials.urdf.xacro" />
+
+  <!-- The physic engine does not accept a base_link with inertia. It is then useful to add a simple link without inertia and make a joint between it and the chassis. -->
+  <link name="base_footprint" />
+
+  <joint name="base_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="base_footprint" />
+    <child link="base_link" />
+  </joint>
+
+  <link name="base_link">
+    <inertial>
+      <origin xyz="-0.051057 0.084732 0.27564" rpy="0 0 0" />
+      <mass value="9.8097" />
+      <inertia ixx="0.19778" ixy="-0.0001277" ixz="3.1033E-05" iyy="0.14861" iyz="8.827E-05" izz="0.29174" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://scorpio7_description/meshes/base_link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.43922 0.43922 0.43922 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://scorpio7_description/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="rocker_l_link">
+    <inertial>
+      <origin xyz="-0.0021495442949242 0.0369982657054717 -0.0595433146746243" rpy="0 0 0" />
+      <mass value="2.16305229292673" />
+      <inertia ixx="0.00378327604559857" ixy="-9.99156360939162E-09" ixz="0.000443873484862911" iyy="0.0164301248906193" iyz="-2.95386982795912E-07" izz="0.0168920497568548" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://scorpio7_description/meshes/rocker_l_link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.866666666666667 0.866666666666667 0.890196078431372 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://scorpio7_description/meshes/rocker_l_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="rocker_l_joint" type="revolute">
+    <origin xyz="0.0023753 0.38725 0.086" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="rocker_l_link" />
+    <axis xyz="0 1 0" />
+    <limit effort="100.0" lower="-0.24" upper="0.24" velocity="100.0" />
+    <dynamics friction="1.0" damping="0.1" />
+  </joint>
+  <link name="wheel_fl_link">
+    <inertial>
+      <origin xyz="1.18105683840075E-05 0.00122088493899342 2.62984574583847E-06" rpy="0 0 0" />
+      <mass value="4.13904554618082" />
+      <inertia ixx="0.00812812885148204" ixy="1.36819662924939E-11" ixz="-1.47089616534854E-08" iyy="0.011559806341936" iyz="-4.88487119971543E-12" izz="0.00812809559303915" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://scorpio7_description/meshes/wheel_fl_link.STL" />
+      </geometry>
+      <material name="scorpio7_wheels" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://scorpio7_description/meshes/wheel_fl_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="wheel_fl_joint" type="continuous">
+    <origin xyz="0.3957 0.031485 -0.19186" rpy="0 0 0" />
+    <parent link="rocker_l_link" />
+    <child link="wheel_fl_link" />
+    <axis xyz="0 1 0" />
+  </joint>
+  <link name="wheel_rl_link">
+    <inertial>
+      <origin xyz="1.18105668462931E-05 0.00122088493949285 2.62984516274933E-06" rpy="0 0 0" />
+      <mass value="4.13904554618082" />
+      <inertia ixx="0.00812812885148205" ixy="1.36819618595123E-11" ixz="-1.47089616518277E-08" iyy="0.011559806341936" iyz="-4.88486833313934E-12" izz="0.00812809559303915" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://scorpio7_description/meshes/wheel_rl_link.STL" />
+      </geometry>
+      <material name="scorpio7_wheels" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://scorpio7_description/meshes/wheel_rl_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="wheel_rl_joint" type="continuous">
+    <origin xyz="-0.40776 0.031485 -0.16469" rpy="0 0 0" />
+    <parent link="rocker_l_link" />
+    <child link="wheel_rl_link" />
+    <axis xyz="0 1 0" />
+  </joint>
+  <link name="rocker_r_link">
+    <inertial>
+      <origin xyz="0.000220903112628375 -0.0369982657054899 -0.0595816923810649" rpy="0 0 0" />
+      <mass value="2.16305229292511" />
+      <inertia ixx="0.00376873367981278" ixy="-1.77088260948124E-09" ixz="-7.86104821537098E-05" iyy="0.016430124890623" iyz="2.95550672529968E-07" izz="0.016906592122632" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://scorpio7_description/meshes/rocker_r_link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.866666666666667 0.866666666666667 0.890196078431372 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://scorpio7_description/meshes/rocker_r_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="rocker_r_joint" type="revolute">
+    <origin xyz="0.0023753 -0.38725 0.086" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="rocker_r_link" />
+    <axis xyz="0 1 0" />
+    <limit effort="100.0" lower="-0.24" upper="0.24" velocity="100.0" />
+    <dynamics friction="1.0" damping="0.1" />
+  </joint>
+  <link name="wheel_fr_link">
+    <inertial>
+      <origin xyz="1.06931295595913E-06 -0.00122091563278093 1.20524759934237E-05" rpy="0 0 0" />
+      <mass value="4.13904528032316" />
+      <inertia ixx="0.00812809973864949" ixy="6.6251281004988E-12" ixz="-1.85044927786952E-08" iyy="0.0115598068440005" iyz="-1.29292450074438E-11" izz="0.00812812427175413" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://scorpio7_description/meshes/wheel_fr_link.STL" />
+      </geometry>
+      <material name="scorpio7_wheels" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://scorpio7_description/meshes/wheel_fr_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="wheel_fr_joint" type="continuous">
+    <origin xyz="0.40302 -0.031485 -0.17597" rpy="0 0 0" />
+    <parent link="rocker_r_link" />
+    <child link="wheel_fr_link" />
+    <axis xyz="0 1 0" />
+  </joint>
+  <link name="wheel_rr_link">
+    <inertial>
+      <origin xyz="-2.54317735615128E-06 -0.00122091424947313 1.18295329591955E-05" rpy="0 0 0" />
+      <mass value="4.13904551472008" />
+      <inertia ixx="0.00812811254466951" ixy="1.01527093596645E-11" ixz="-2.21984670059332E-08" iyy="0.011559806395613" iyz="-1.03913629787163E-11" izz="0.00812811187348684" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://scorpio7_description/meshes/wheel_rr_link.STL" />
+      </geometry>
+      <material name="scorpio7_wheels" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://scorpio7_description/meshes/wheel_rr_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="wheel_rr_joint" type="continuous">
+    <origin xyz="-0.40089 -0.031485 -0.18078" rpy="0 0 0" />
+    <parent link="rocker_r_link" />
+    <child link="wheel_rr_link" />
+    <axis xyz="0 1 0" />
+  </joint>
+  <joint name="zed_joint" type="fixed">
+    <origin xyz="0.26615 0.2365 0.66628" rpy="0 0.50265 0" />
+    <parent link="base_link" />
+    <child link="zed_camera_center" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="gps_link">
+    <inertial>
+      <origin xyz="-6.93889390390723E-18 0 -0.00723576856287289" rpy="0 0 0" />
+      <mass value="0.0197854810744264" />
+      <inertia ixx="2.57554905129918E-06" ixy="-2.43630539791017E-21" ixz="1.35497097550352E-21" iyy="2.57554905129918E-06" iyz="6.12735398924627E-22" izz="4.4902604825689E-06" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://scorpio7_description/meshes/gps_link.STL" />
+      </geometry>
+      <material name="scorpio7_blue" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://scorpio7_description/meshes/gps_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="gps_joint" type="fixed">
+    <origin xyz="0.027375 0.2565 0.77955" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="gps_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="imu_link">
+    <inertial>
+      <origin xyz="-3.04008851426119E-09 -5.02180001749064E-09 -0.0130451148606155" rpy="0 0 0" />
+      <mass value="0.0686535995732115" />
+      <inertia ixx="1.60152292956219E-05" ixy="-1.36640945266973E-12" ixz="1.98373397979343E-12" iyy="2.36282980641031E-05" iyz="1.24354485996673E-12" izz="3.14376575178028E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://scorpio7_description/meshes/imu_link.STL" />
+      </geometry>
+      <material name="scorpio7_blue" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://scorpio7_description/meshes/imu_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="imu_joint" type="fixed">
+    <origin xyz="0.22688 0.0545 0.20005" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="imu_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="frontcam_link">
+    <inertial>
+      <origin xyz="-0.0036065280265406 4.11217011764069E-18 -0.000343513379852985" rpy="0 0 0" />
+      <mass value="0.017117237187432" />
+      <inertia ixx="1.01314660685396E-06" ixy="1.00676120784425E-22" ixz="-4.38895928089758E-08" iyy="1.16648494486891E-06" iyz="-1.12233098014508E-22" izz="1.19188455261928E-06" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://scorpio7_description/meshes/frontcam_link.STL" />
+      </geometry>
+      <material name="scorpio7_black" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://scorpio7_description/meshes/frontcam_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="frontcam_joint" type="fixed">
+    <origin xyz="0.29828 0 0.0865" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="frontcam_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="obrotowa_link">
+    <inertial>
+      <origin xyz="-1.53178305815349E-05 -2.80218575483548E-05 0.0544778769506302" rpy="0 0 0" />
+      <mass value="0.17052115148859" />
+      <inertia ixx="0.000310901269876752" ixy="4.31138599776784E-08" ixz="-4.84351890303998E-08" iyy="0.000310958327155654" iyz="4.06238835171262E-08" izz="0.000518144996873594" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://scorpio7_description/meshes/obrotowa_link.STL" />
+      </geometry>
+      <material name="scorpio7_black" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://scorpio7_description/meshes/obrotowa_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="obrotowa_joint" type="fixed">
+    <origin xyz="-0.22412 0.1095 0.874" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="obrotowa_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+</robot>

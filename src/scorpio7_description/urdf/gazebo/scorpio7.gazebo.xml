@@ -1,0 +1,158 @@
+<robot>
+
+  <gazebo reference="rocker_l_link">
+    <kp>1e6</kp>
+    <kd>1.0</kd>
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <minDepth>0.003</minDepth>
+  </gazebo>
+
+  <transmission name="rocker_l_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="rocker_l_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="rocker_l_virtual_motor" />
+  </transmission>
+
+  <gazebo reference="rocker_r_link">
+    <kp>1e6</kp>
+    <kd>1.0</kd>
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <minDepth>0.003</minDepth>
+  </gazebo>
+
+  <transmission name="rocker_r_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="rocker_r_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="rocker_r_virtual_motor" />
+  </transmission>
+
+  <gazebo reference="wheel_fl_link">
+    <kp>1e6</kp>
+    <kd>100.0</kd>
+    <mu1>3.0</mu1>
+    <mu2>1.0</mu2>
+    <fdir1>1 0 0</fdir1>
+    <minDepth>0.003</minDepth>
+  </gazebo>
+
+  <transmission name="wheel_fl_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="wheel_fl_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="wheel_fl_virtual_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <gazebo reference="wheel_fr_link">
+    <kp>1e6</kp>
+    <kd>100.0</kd>
+    <mu1>3.0</mu1>
+    <mu2>1.0</mu2>
+    <fdir1>1 0 0</fdir1>
+    <minDepth>0.003</minDepth>
+  </gazebo>
+
+  <transmission name="wheel_fr_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="wheel_fr_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="wheel_fr_virtual_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <gazebo reference="wheel_rl_link">
+    <kp>1e6</kp>
+    <kd>100.0</kd>
+    <mu1>3.0</mu1>
+    <mu2>1.0</mu2>
+    <fdir1>1 0 0</fdir1>
+    <minDepth>0.003</minDepth>
+  </gazebo>
+
+  <transmission name="wheel_rl_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="wheel_rl_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="wheel_rl_virtual_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <gazebo reference="wheel_rr_link">
+    <kp>1e6</kp>
+    <kd>100.0</kd>
+    <mu1>3.0</mu1>
+    <mu2>1.0</mu2>
+    <fdir1>1 0 0</fdir1>
+    <minDepth>0.003</minDepth>
+  </gazebo>
+
+  <transmission name="wheel_rr_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="wheel_rr_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="wheel_rr_virtual_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/rover</robotNamespace>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+    </plugin>
+  </gazebo>
+
+  <gazebo reference="base_footprint">
+    <kp>1e6</kp>
+    <kd>1.0</kd>
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <minDepth>0.003</minDepth>
+  </gazebo>
+
+  <gazebo reference="base_link">
+    <kp>1e6</kp>
+    <kd>1.0</kd>
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <minDepth>0.003</minDepth>
+  </gazebo>
+
+  <gazebo>
+    <plugin name="rocker_differential" filename="libscorpio7_gazebo_differential_plugin.so">
+      <jointA>rocker_r_joint</jointA>
+      <jointB>rocker_l_joint</jointB>
+      <forceConstant>100.0</forceConstant>
+    </plugin>
+  </gazebo>
+
+  <gazebo>
+    <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
+      <updateRate>100.0</updateRate>
+      <robotNamespace>/</robotNamespace>
+      <leftFrontJoint>wheel_fl_joint</leftFrontJoint>
+      <rightFrontJoint>wheel_fr_joint</rightFrontJoint>
+      <leftRearJoint>wheel_rl_joint</leftRearJoint>
+      <rightRearJoint>wheel_rr_joint</rightRearJoint>
+      <wheelSeparation>0.8</wheelSeparation>
+      <wheelDiameter>0.215</wheelDiameter>
+      <robotBaseFrame>base_link</robotBaseFrame>
+      <torque>20</torque>
+      <topicName>cmd_vel</topicName>
+      <broadcastTF>true</broadcastTF>
+    </plugin>
+  </gazebo>
+</robot>

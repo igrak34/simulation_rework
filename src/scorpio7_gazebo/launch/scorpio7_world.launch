@@ -1,0 +1,24 @@
+<launch>
+	<include file="$(find gazebo_ros)/launch/empty_world.launch">
+		<arg name="world_name" value="$(find scorpio7_gazebo)/worlds/scorpio7.world" />
+		<arg name="gui" value="true" />
+		<arg name="verbose" value="true" />
+	</include>
+
+	<!-- ros_control scorpio7 launch file -->
+	<include file="$(find scorpio7_control)/launch/scorpio7_control.launch" />
+
+	<!-- urdf xml robot description loaded on the Parameter Server, converting the xacro into a proper urdf file-->
+	<param name="robot_description" command="$(find xacro)/xacro '$(find scorpio7_description)/urdf/scorpio7.urdf.xacro'" />
+
+	<arg name="x" default="0.0" />
+	<arg name="y" default="0.0" />
+	<arg name="z" default="1.0" />
+	<arg name="R" default="0.0" />
+	<arg name="P" default="0.0" />
+	<arg name="Y" default="0.0" />
+
+	<!-- push robot_description to factory and spawn robot in gazebo -->
+	<node name="scorpio7_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model scorpio7 -x $(arg x) -y $(arg y) -z $(arg z)
+	-R $(arg R) -P $(arg P) -Y $(arg Y)" />
+</launch>

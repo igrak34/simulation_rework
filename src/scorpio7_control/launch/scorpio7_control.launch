@@ -1,0 +1,24 @@
+<launch>
+
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find scorpio7_control)/config/scorpio7_control.yaml" command="load"/>
+
+  <!-- load the controllers -->
+  <node name="controller_spawner"
+    pkg="controller_manager"
+    type="spawner" respawn="false"
+    output="screen" ns="/rover"
+    args="joint_state_controller
+    wheel_fr_effort_controller
+    wheel_fl_effort_controller
+    wheel_rr_effort_controller
+    wheel_rl_effort_controller"
+  />
+
+  <!-- convert joint states to TF transforms for rviz, etc -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+    <param name="robot_description" command="$(find xacro)/xacro '$(find scorpio7_description)/urdf/scorpio7.urdf.xacro'" />
+    <remap from="/joint_states" to="/rover/joint_states" />
+  </node>
+
+</launch>
