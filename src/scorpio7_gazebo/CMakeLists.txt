@@ -11,6 +11,9 @@ find_package(catkin REQUIRED COMPONENTS
   gazebo_ros
 )
 
+find_package(catkin REQUIRED COMPONENTS
+  xacro
+)
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -189,7 +192,21 @@ include_directories(
 #   # myfile2
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
+file(GLOB xacro_files worlds/*.world.xacro)
+xacro_add_files(${xacro_files} TARGET generate_world_files)
 
+install(DIRECTORY
+  launch
+  media
+  models
+  config
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
+
+install(DIRECTORY worlds
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  PATTERN "*.world"
+)
 #############
 ## Testing ##
 #############

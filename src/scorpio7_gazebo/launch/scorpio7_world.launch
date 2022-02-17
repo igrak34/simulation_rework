@@ -1,6 +1,6 @@
 <launch>
 	<include file="$(find gazebo_ros)/launch/empty_world.launch">
-		<arg name="world_name" value="$(find scorpio7_gazebo)/worlds/scorpio7.world" />
+		<arg name="world_name" value="$(find scorpio7_gazebo)/worlds/marsyard2020.world" />
 		<arg name="gui" value="true" />
 		<arg name="verbose" value="true" />
 	</include>
