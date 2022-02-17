@@ -9,6 +9,7 @@
   <xacro:include filename="$(find scorpio7_description)/urdf/gazebo/frontcam.gazebo.xml" />
   <xacro:include filename="$(find scorpio7_description)/urdf/gazebo/imu.gazebo.xml" />
   <xacro:include filename="$(find scorpio7_description)/urdf/gazebo/materials.gazebo.xml" />
+  <xacro:include filename="$(find scorpio7_description)/urdf/gazebo/gps.gazebo.xml" />
   <xacro:include filename="$(find scorpio7_description)/urdf/zed_urdf/zed_descr.urdf.xacro" />
 
   <!-- Import cutom colors for Scorpio7 -->
@@ -320,5 +321,4 @@
     <child link="obrotowa_link" />
     <axis xyz="0 0 0" />
   </joint>
-
 </robot>
